@@ -2,6 +2,8 @@
 #include <thread>
 #include <chrono>
 #include <conio.h>
+#include "json.hpp"
+using json = nlohmann::json;
 
 using namespace std;
 
@@ -15,7 +17,7 @@ using namespace std;
 #define KEY_RIGHT 77
 #define ENTER 13
 
-size_t doctorSize = 20;
+size_t doctorSize = 0;
 
 
 int main()
@@ -23,6 +25,10 @@ int main()
 	srand(time(NULL));
 	cout << "Welcome To Doctor Admin System";
 	this_thread::sleep_for(chrono::seconds(2));
+
+	Doctor* doctors = nullptr;
+	loadDoctorsFromFile(doctors, doctorSize);
+
 	/*while (true)
 	{
 		int intch = _getch();
@@ -79,6 +85,7 @@ int main()
 				Doctor newDoctor;
 				inputDoctorData(newDoctor, id);
 				addDoctor(doctors, doctorSize, newDoctor);
+				saveDoctorsToFile(doctors, doctorSize);
 
 				cout << "Doctor successfully added" << endl;
 				break;
@@ -101,6 +108,7 @@ int main()
 				Doctor newDoctor;
 				inputDoctorData(newDoctor, id);
 				updateDoctor(id, newDoctor, doctors, doctorSize, check);
+				saveDoctorsToFile(doctors, doctorSize);
 
 				cout << "Doctor updated successfully" << endl;
 				break;

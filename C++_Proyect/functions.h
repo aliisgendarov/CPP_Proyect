@@ -20,6 +20,7 @@ void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
 			copyStr(doctors[i].email)
 		);
 	}
+	cout << "NEW PTR: " << newArr[0].name << endl;
 
 	newArr[size] = Doctor(
 		newDoctor.id,
@@ -34,9 +35,6 @@ void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
 	delete[] doctors;
 	doctors = newArr;
 	size++;
-
-	cout << "Doctor added" << endl;
-	cout << "NEW PTR: " << newArr[0].name << endl;
 }
 
 
@@ -179,4 +177,64 @@ void inputDoctorData(Doctor& d, int id)
 	cin.ignore();
 	cout << "Enter Email: ";
 	cin.getline(d.email, 30);
+}
+
+#include <fstream>
+
+void saveDoctorsToFile(Doctor* doctors, size_t size)
+{
+	json j;
+
+	for (size_t i = 0; i < size; i++)
+	{
+		j.push_back({
+			{"id", doctors[i].id},
+			{"name", doctors[i].name},
+			{"surname", doctors[i].surname},
+			{"specialization", doctors[i].specialization},
+			{"experience", doctors[i].experience},
+			{"roomNumber", doctors[i].roomNumber},
+			{"email", doctors[i].email}
+			});
+	}
+
+	ofstream file("doctors.json");
+
+	if (!file.is_open())
+	{
+		cout << "File open error!" << endl;
+		return;
+	}
+
+	file << j.dump(4);
+}
+
+void loadDoctorsFromFile(Doctor*& doctors, size_t& size)
+{
+	ifstream file("doctors.json");
+
+	if (!file.is_open())
+	{
+		cout << "File open error!" << endl;
+		return;
+	}
+
+	json j;
+	file >> j;
+
+	size = j.size();
+	doctors = new Doctor[size];
+
+	for (size_t i = 0; i < size; i++)
+	{
+		doctors[i].id = j[i]["id"];
+
+		doctors[i].name = copyStr(j[i]["name"].get<string>().c_str());
+		doctors[i].surname = copyStr(j[i]["surname"].get<string>().c_str());
+		doctors[i].email = copyStr(j[i]["email"].get<string>().c_str());
+
+		doctors[i].specialization = (Specialization)j[i]["specialization"];
+		doctors[i].experience = j[i]["experience"];
+		doctors[i].roomNumber = j[i]["roomNumber"];
+	}
 }

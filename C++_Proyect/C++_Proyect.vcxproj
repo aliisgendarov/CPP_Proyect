@@ -130,9 +130,13 @@
     <ClCompile Include="C++_Proyect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Downloads\json.hpp" />
     <ClInclude Include="datas.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="models.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="doctors.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
