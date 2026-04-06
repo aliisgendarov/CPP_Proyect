@@ -1,25 +1,32 @@
-﻿#include <iostream>
-#include <thread>
-#include <chrono>
-#include <conio.h>
-#include "json.hpp"
-using json = nlohmann::json;
-
-using namespace std;
-
+﻿#pragma region Defines
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 #define ENTER 13
+#pragma endregion
 
-#include "datas.h"
+#pragma region Includes
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <conio.h>
+
+#include "json.hpp"
+using json = nlohmann::json;
+
+using namespace std;
+
+#include "helpers.h"
 #include "models.h"
 #include "functions.h"
+#pragma endregion
 
+#pragma region Global Variables
 size_t doctorSize = 0;
+#pragma endregion
 
-
+#pragma region Main
 int main()
 {
 	srand(time(NULL));
@@ -29,16 +36,6 @@ int main()
 	Doctor* doctors = nullptr;
 	loadDoctorsFromFile(doctors, doctorSize);
 
-	/*while (true)
-	{
-		int intch = _getch();
-		char ch = intch;
-		cout << "intch: " << intch << endl;
-		cout << "ch: " << ch << endl;
-
-		if (intch == 27)
-			break;
-	}*/
 	int choice = 0;
 	while (true)
 	{
@@ -210,3 +207,4 @@ int main()
 	}
 	return 0;
 }
+#pragma endregion

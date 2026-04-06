@@ -131,8 +131,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Downloads\json.hpp" />
-    <ClInclude Include="datas.h" />
     <ClInclude Include="functions.h" />
+    <ClInclude Include="helpers.h" />
     <ClInclude Include="models.h" />
   </ItemGroup>
   <ItemGroup>

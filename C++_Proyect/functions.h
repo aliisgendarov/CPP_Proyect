@@ -1,41 +1,9 @@
 #pragma 
 
+#pragma region Global Filter Variables
 int minExp, maxExp;
 Specialization selectedSpec;
-
-void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
-{
-	Doctor* newArr = new Doctor[size + 1];
-
-	for (size_t i = 0; i < size; i++)
-	{
-		newArr[i] = Doctor(
-			doctors[i].id,
-			copyStr(doctors[i].name),
-			copyStr(doctors[i].surname),
-			doctors[i].specialization,
-			doctors[i].experience,
-			doctors[i].roomNumber,
-			copyStr(doctors[i].email)
-		);
-	}
-
-	newArr[size] = Doctor(
-		newDoctor.id,
-		copyStr(newDoctor.name),
-		copyStr(newDoctor.surname),
-		newDoctor.specialization,
-		newDoctor.experience,
-		newDoctor.roomNumber,
-		copyStr(newDoctor.email)
-	);
-
-	delete[] doctors;
-
-	doctors = newArr;
-	size++;
-}
-
+#pragma endregion
 
 int idCheck(Doctor* doctors, int id, size_t doctorSize)
 {
@@ -46,6 +14,60 @@ int idCheck(Doctor* doctors, int id, size_t doctorSize)
 	return -1;
 }
 
+#pragma region CRUD Functions
+void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
+{
+	Doctor* newArr = new Doctor[size + 1];
+
+	for (size_t i = 0; i < size; i++)
+	{
+		newArr[i] = doctors[i];
+	}
+
+	newArr[size] = newDoctor;
+
+	delete[] doctors;
+
+	doctors = newArr;
+	size++;
+}
+
+void updateDoctor(int id, const Doctor& newDoctor, Doctor* doctors, size_t doctorSize, int check)
+{
+	doctors[check] = newDoctor;
+
+	cout << "Update was successful" << endl;
+}
+
+void deleteDoctor(int id, Doctor*& doctors, size_t& size)
+{
+	int index = idCheck(doctors, id, size);
+
+	if (index == -1)
+	{
+		cout << "Doctor not found" << endl;
+		return;
+	}
+
+	Doctor* newArr = new Doctor[size - 1];
+
+	for (size_t i = 0, j = 0; i < size; i++)
+	{
+		if (i != index)
+		{
+			newArr[j++] = doctors[i];
+		}
+	}
+
+	delete[] doctors;
+	doctors = newArr;
+	size--;
+
+	cout << "Doctor deleted successfully" << endl;
+}
+#pragma endregion
+
+#pragma region Get Functions
 void getDoctors(Doctor* doctors, size_t doctorSize)
 {
 	for (size_t i = 0; i < doctorSize; i++)
@@ -68,59 +90,9 @@ void getDoctorById(Doctor* doctors, size_t doctorSize, int id)
 	doctors[check].printInfoWithId();
 	cout << endl;
 }
+#pragma endregion
 
-void updateDoctor(int id, const Doctor& newDoctor, Doctor* doctors, size_t doctorSize, int check)
-{
-	delete[] doctors[check].name;
-	delete[] doctors[check].surname;
-	delete[] doctors[check].email;
-
-	doctors[check].id = newDoctor.id;
-	doctors[check].name = copyStr(newDoctor.name);
-	doctors[check].surname = copyStr(newDoctor.surname);
-	doctors[check].specialization = newDoctor.specialization;
-	doctors[check].experience = newDoctor.experience;
-	doctors[check].roomNumber = newDoctor.roomNumber;
-	doctors[check].email = copyStr(newDoctor.email);
-
-	cout << "Update was successful" << endl;
-}
-
-void deleteDoctor(int id, Doctor*& doctors, size_t& size)
-{
-	int index = idCheck(doctors, id, size);
-
-	if (index == -1)
-	{
-		cout << "Doctor not found" << endl;
-		return;
-	}
-
-	Doctor* newArr = new Doctor[size - 1];
-
-	for (size_t i = 0, j = 0; i < size; i++)
-	{
-		if (i != index)
-		{
-			newArr[j++] = Doctor(
-				doctors[i].id,
-				copyStr(doctors[i].name),
-				copyStr(doctors[i].surname),
-				doctors[i].specialization,
-				doctors[i].experience,
-				doctors[i].roomNumber,
-				copyStr(doctors[i].email)
-			);
-		}
-	}
-
-	delete[] doctors;
-	doctors = newArr;
-	size--;
-
-	cout << "Doctor deleted successfully" << endl;
-}
-
+#pragma region Filter Functions
 bool expFilter(Doctor d)
 {
 	return d.experience >= minExp && d.experience <= maxExp;
@@ -142,7 +114,9 @@ void filterDoctors(Doctor* doctors, size_t size, bool (*filter)(Doctor))
 		}
 	}
 }
+#pragma endregion
 
+#pragma region Input Functions
 Specialization selectSpecializationWithArrows()
 {
 	int choice = 0;
@@ -178,6 +152,11 @@ Specialization selectSpecializationWithArrows()
 
 void inputDoctorData(Doctor& d, int id)
 {
+
+	delete[] d.name;
+	delete[] d.surname;
+	delete[] d.email;
+
 	d.id = id;
 
 	d.name = new char[15];
@@ -204,7 +183,9 @@ void inputDoctorData(Doctor& d, int id)
 	cout << "Enter Email: ";
 	cin.getline(d.email, 30);
 }
+#pragma endregion
 
+#pragma region File Operations
 #include <fstream>
 
 void saveDoctorsToFile(Doctor* doctors, size_t size)
@@ -264,4 +245,4 @@ void loadDoctorsFromFile(Doctor*& doctors, size_t& size)
 		doctors[i].roomNumber = j[i]["roomNumber"];
 	}
 }
-
+#pragma endregion

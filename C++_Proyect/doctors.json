@@ -27,13 +27,13 @@
         "surname": "Huseynova"
     },
     {
-        "email": "[rashad@mail.com](mailto:rashad@mail.com)",
-        "experience": 8,
+        "email": "aygun.103@gmail.com",
+        "experience": 7,
         "id": 4,
-        "name": "Rashad",
-        "roomNumber": 104,
-        "specialization": 3,
-        "surname": "Karimov"
+        "name": "aygun",
+        "roomNumber": 105,
+        "specialization": 2,
+        "surname": "zaurov"
     },
     {
         "email": "isa.mammadli@gmail.com",
@@ -54,13 +54,13 @@
         "surname": "Hasanov"
     },
     {
-        "email": "[sabina@mail.com](mailto:sabina@mail.com)",
-        "experience": 4,
+        "email": "ciristiano7ronaldo@gmail.com",
+        "experience": 25,
         "id": 7,
-        "name": "Sabina",
-        "roomNumber": 107,
+        "name": "rolando",
+        "roomNumber": 7,
         "specialization": 2,
-        "surname": "Guliyeva"
+        "surname": "cristiano"
     },
     {
         "email": "[tural@mail.com](mailto:tural@mail.com)",

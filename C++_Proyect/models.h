@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma region Enum
 enum Specialization
 {
 	Therapist,
@@ -7,8 +8,9 @@ enum Specialization
 	Cardiologist,
 	Dentist
 };
+#pragma endregion
 
-
+#pragma region Doctor Struct
 struct Doctor
 {
 	int id;
@@ -19,6 +21,7 @@ struct Doctor
 	int roomNumber;
 	char* email;
 
+	#pragma region Constructors
 	Doctor()
 	{
 		id = 0;
@@ -40,7 +43,9 @@ struct Doctor
 		this->roomNumber = roomNumber;
 		this->email = email;
 	}
+	#pragma endregion
 
+	#pragma region Methods
 	const char* getSpecName(Specialization s)
 	{
 		switch (s)
@@ -75,7 +80,9 @@ struct Doctor
 		cout << "Room number: " << roomNumber << endl;
 		cout << "Email: " << email << endl;
 	}
+	#pragma endregion
 
+	#pragma region Coppy, Assignment
 	Doctor(const Doctor& other)
 	{
 		id = other.id;
@@ -105,7 +112,9 @@ struct Doctor
 		}
 		return *this;
 	}
+	#pragma endregion
 
+	#pragma region Destroctor
 	~Doctor()
 	{
 		delete[] name;
@@ -113,4 +122,6 @@ struct Doctor
 		delete[] email;
 		name = surname = email = nullptr;
 	}
+	#pragma endregion
 };
+#pragma endregion
