@@ -9,6 +9,7 @@ char* copyStr(const char* str)
 	return newStr;
 }
 
+
 //Doctor* doctors = new Doctor[20]{
 //	{1, copyStr("Ali"), copyStr("Mammadov"), Therapist, 5, 101, copyStr("ali@mail.com")},
 //	{2, copyStr("Veli"), copyStr("Aliyev"), Surgeon, 10, 102, copyStr("veli@mail.com")},

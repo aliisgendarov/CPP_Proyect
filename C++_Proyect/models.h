@@ -76,6 +76,36 @@ struct Doctor
 		cout << "Email: " << email << endl;
 	}
 
+	Doctor(const Doctor& other)
+	{
+		id = other.id;
+		name = copyStr(other.name);
+		surname = copyStr(other.surname);
+		email = copyStr(other.email);
+		specialization = other.specialization;
+		experience = other.experience;
+		roomNumber = other.roomNumber;
+	}
+
+	Doctor& operator=(const Doctor& other)
+	{
+		if (this != &other)
+		{
+			delete[] name;
+			delete[] surname;
+			delete[] email;
+
+			id = other.id;
+			name = copyStr(other.name);
+			surname = copyStr(other.surname);
+			email = copyStr(other.email);
+			specialization = other.specialization;
+			experience = other.experience;
+			roomNumber = other.roomNumber;
+		}
+		return *this;
+	}
+
 	~Doctor()
 	{
 		delete[] name;

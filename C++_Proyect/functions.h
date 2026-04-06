@@ -5,7 +5,6 @@ Specialization selectedSpec;
 
 void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
 {
-	cout << "OLD PTR: " << doctors[0].name << endl;
 	Doctor* newArr = new Doctor[size + 1];
 
 	for (size_t i = 0; i < size; i++)
@@ -20,7 +19,6 @@ void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
 			copyStr(doctors[i].email)
 		);
 	}
-	cout << "NEW PTR: " << newArr[0].name << endl;
 
 	newArr[size] = Doctor(
 		newDoctor.id,
@@ -33,6 +31,7 @@ void addDoctor(Doctor*& doctors, size_t& size, const Doctor& newDoctor)
 	);
 
 	delete[] doctors;
+
 	doctors = newArr;
 	size++;
 }
@@ -144,6 +143,38 @@ void filterDoctors(Doctor* doctors, size_t size, bool (*filter)(Doctor))
 	}
 }
 
+Specialization selectSpecializationWithArrows()
+{
+	int choice = 0;
+
+	while (true)
+	{
+		system("cls || clear");
+
+		cout << "Select Specialization:\n";
+		cout << "Therapist" << (choice == 0 ? " <<" : "") << endl;
+		cout << "Surgeon" << (choice == 1 ? " <<" : "") << endl;
+		cout << "Cardiologist" << (choice == 2 ? " <<" : "") << endl;
+		cout << "Dentist" << (choice == 3 ? " <<" : "") << endl;
+
+		int c = _getch();
+
+		if (c == KEY_UP)
+		{
+			if (choice > 0) choice--;
+			else choice = 3;
+		}
+		else if (c == KEY_DOWN)
+		{
+			if (choice < 3) choice++;
+			else choice = 0;
+		}
+		else if (c == ENTER)
+		{
+			return (Specialization)choice;
+		}
+	}
+}
 
 void inputDoctorData(Doctor& d, int id)
 {
@@ -153,7 +184,6 @@ void inputDoctorData(Doctor& d, int id)
 	d.surname = new char[30];
 	d.email = new char[30];
 
-	int specChoice;
 
 	cin.ignore();
 	cout << "Enter Name: ";
@@ -162,11 +192,7 @@ void inputDoctorData(Doctor& d, int id)
 	cout << "Enter Surname: ";
 	cin.getline(d.surname, 30);
 
-	cout << "Select Specialization:\n";
-	cout << "0 - Therapist\n1 - Surgeon\n2 - Cardiologist\n3 - Dentist\n";
-	cin >> specChoice;
-
-	d.specialization = (Specialization)specChoice;
+	d.specialization = selectSpecializationWithArrows();
 
 	cout << "Enter Experience: ";
 	cin >> d.experience;
@@ -238,3 +264,4 @@ void loadDoctorsFromFile(Doctor*& doctors, size_t& size)
 		doctors[i].roomNumber = j[i]["roomNumber"];
 	}
 }
+

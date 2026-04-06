@@ -7,15 +7,15 @@ using json = nlohmann::json;
 
 using namespace std;
 
-#include "models.h"
-#include "datas.h"
-#include "functions.h"
-
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 #define ENTER 13
+
+#include "datas.h"
+#include "models.h"
+#include "functions.h"
 
 size_t doctorSize = 0;
 
@@ -48,17 +48,18 @@ int main()
 		cout << "Get Doctors" << (choice == 2 ? "<<" : "") << endl;
 		cout << "Get Doctors By Id" << (choice == 3 ? "<<" : "") << endl;
 		cout << "Filter Doctors" << (choice == 4 ? "<<" : "") << endl;
-		cout << "Exit" << (choice == 5 ? "<<" : "") << endl;
+		cout << "Delete Doctor" << (choice == 5 ? "<<" : "") << endl;
+		cout << "Exit" << (choice == 6 ? "<<" : "") << endl;
 
 		int c = 0;
 		switch (c = _getch())
 		{
 		case KEY_UP:
 			if (choice > 0) choice--;
-			else choice = 5;
+			else choice = 6;
 			break;
 		case KEY_DOWN:
-			if (choice < 5) choice++;
+			if (choice < 6) choice++;
 			else choice = 0;
 			break;
 		case KEY_LEFT:
@@ -167,13 +168,7 @@ int main()
 						}
 						else if (fchoice == 1)
 						{
-							int specChoice;
-
-							cout << "0 - Therapist\n1 - Surgeon\n2 - Cardiologist\n3 - Dentist\n";
-							cout << "Select: ";
-							cin >> specChoice;
-
-							selectedSpec = (Specialization)specChoice;
+							selectedSpec = selectSpecializationWithArrows();
 
 							filterDoctors(doctors, doctorSize, specFilter);
 						}
@@ -184,6 +179,19 @@ int main()
 				break;
 			}
 			case 5:
+			{
+				cout << "Delete Doctor" << endl;
+
+				int id;
+				cout << "Enter ID: ";
+				cin >> id;
+
+				deleteDoctor(id, doctors, doctorSize);
+				saveDoctorsToFile(doctors, doctorSize);
+
+				break;
+			}
+			case 6:
 			{
 				cout << "Finish";
 				return 0;
