@@ -43,20 +43,21 @@ int main()
 		cout << "Add Doctor" << (choice == 0 ? "<<" : "") << endl;
 		cout << "Update Doctor" << (choice == 1 ? "<<" : "") << endl;
 		cout << "Get Doctors" << (choice == 2 ? "<<" : "") << endl;
-		cout << "Get Doctors By Id" << (choice == 3 ? "<<" : "") << endl;
-		cout << "Filter Doctors" << (choice == 4 ? "<<" : "") << endl;
-		cout << "Delete Doctor" << (choice == 5 ? "<<" : "") << endl;
-		cout << "Exit" << (choice == 6 ? "<<" : "") << endl;
+		cout << "    Get Doctors By Id" << (choice == 3 ? "<<" : "") << endl;
+		cout << "    Filter Doctors" << (choice == 4 ? "<<" : "") << endl;
+		cout << "    Search Doctor" << (choice == 5 ? "<<" : "") << endl;
+		cout << "Delete Doctor" << (choice == 6 ? "<<" : "") << endl;
+		cout << "Exit" << (choice == 7 ? "<<" : "") << endl;
 
 		int c = 0;
 		switch (c = _getch())
 		{
 		case KEY_UP:
 			if (choice > 0) choice--;
-			else choice = 6;
+			else choice = 7;
 			break;
 		case KEY_DOWN:
-			if (choice < 6) choice++;
+			if (choice < 7) choice++;
 			else choice = 0;
 			break;
 		case KEY_LEFT:
@@ -177,6 +178,55 @@ int main()
 			}
 			case 5:
 			{
+				int schoice = 0;
+
+				while (true)
+				{
+					system("cls || clear");
+
+					cout << "Search by:" << endl;
+					cout << "Name" << (schoice == 0 ? " <<" : "") << endl;
+					cout << "Surname" << (schoice == 1 ? " <<" : "") << endl;
+
+					int ch5 = _getch();
+					if (ch5 == KEY_UP)
+					{
+						if (schoice > 0) schoice--;
+						else schoice = 1;
+					}
+					else if (ch5 == KEY_DOWN)
+					{
+						if (schoice < 1) schoice++;
+						else schoice = 0;
+					}
+					else if (ch5 == ENTER)
+					{
+						system("cls || clear");
+
+						if (schoice == 0)
+						{
+							cout << "Enter name: ";
+							cin.getline(searchName, 30);
+
+							filterDoctors(doctors, doctorSize, nameFilter);
+						}
+						else
+						{
+							cout << "Enter surname: ";
+							cin.getline(searchSurname, 30);
+
+							filterDoctors(doctors, doctorSize, surnameFilter);
+						}
+
+						_getch();
+						break;
+					}
+				}
+				break;
+			}
+
+			case 6:
+			{
 				cout << "Delete Doctor" << endl;
 
 				int id;
@@ -188,7 +238,7 @@ int main()
 
 				break;
 			}
-			case 6:
+			case 7:
 			{
 				cout << "Finish";
 				return 0;

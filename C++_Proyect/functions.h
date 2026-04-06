@@ -3,6 +3,8 @@
 #pragma region Global Filter Variables
 int minExp, maxExp;
 Specialization selectedSpec;
+char searchName[30];
+char searchSurname[30];
 #pragma endregion
 
 int idCheck(Doctor* doctors, int id, size_t doctorSize)
@@ -102,6 +104,17 @@ bool specFilter(Doctor d)
 {
 	return d.specialization == selectedSpec;
 }
+
+bool nameFilter(Doctor d)
+{
+	return strcmp(d.name, searchName) == 0;
+}
+
+bool surnameFilter(Doctor d)
+{
+	return strcmp(d.surname, searchSurname) == 0;
+}
+
 
 void filterDoctors(Doctor* doctors, size_t size, bool (*filter)(Doctor))
 {
